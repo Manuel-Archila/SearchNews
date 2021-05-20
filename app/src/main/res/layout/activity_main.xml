@@ -7,6 +7,7 @@
     android:id="@+id/viewRoot"
     tools:context=".MainActivity">
 
+
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchNews"
         android:layout_width="0dp"
@@ -15,6 +16,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toTopOf="@id/rvNews"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchNews"
+        app:layout_constraintVertical_bias="0.0"
+        android:id="@+id/lay">
+
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/btnaus"
+            android:src="@drawable/bandaustralia"/>
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/btnusa"
+            android:src="@drawable/bandusa"/>
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/btnrus"
+            android:src="@drawable/bandrusia"/>
+
+
+    </LinearLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvNews"
         android:layout_width="0dp"
@@ -22,6 +60,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchNews" />
+        app:layout_constraintTop_toBottomOf="@+id/lay" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

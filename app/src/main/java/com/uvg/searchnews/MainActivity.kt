@@ -3,6 +3,8 @@ package com.uvg.searchnews
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +19,10 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: ArticleAdapter
     private val articleList = mutableListOf<Articles>()
+    lateinit var btn1:ImageButton
+    lateinit var btn2:ImageButton
+    lateinit var btn3:ImageButton
+    lateinit var countr:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,9 +30,30 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         setContentView(binding.root)
 
         binding.searchNews.setOnQueryTextListener(this)
+        btn1 = findViewById(R.id.btnaus)
+        btn2 = findViewById(R.id.btnusa)
+        btn3 = findViewById(R.id.btnrus)
+
+        btn1.setOnClickListener {
+            searchNew("general", "au")
+            countr = "au"
+            showMessage("Australia")
+        }
+        btn2.setOnClickListener {
+            searchNew("general", "us")
+            countr = "us"
+            showMessage("United States")
+        }
+        btn3.setOnClickListener {
+            searchNew("general", "ru")
+            countr = "ru"
+            showMessage("Russia")
+        }
+
 
         initRecyclerView()
-        searchNew("general")
+        searchNew("general","us")
+        countr = "us"
 
     }
 
@@ -38,13 +65,13 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     }
 
-    private fun searchNew(category:String){
+    private fun searchNew(category:String, country:String){
 
         val api = Retrofit2()
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val call = api.getService()?.getNewsByCategory("us",category,"4b94054dbc6b4b3b9e50d8f62cde4f6c")
+            val call = api.getService()?.getNewsByCategory(country,category,"4b94054dbc6b4b3b9e50d8f62cde4f6c")
             val news: NewsResponse? = call?.body()
 
             runOnUiThread{
@@ -80,7 +107,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     override fun onQueryTextSubmit(query: String?): Boolean {
         showMessage(query.toString())
         if (!query.isNullOrEmpty()){
-            searchNew(query.toLowerCase())
+            searchNew(query.lowercase(),countr)
         }
         return true
     }
